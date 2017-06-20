@@ -1,0 +1,36 @@
+<html>
+
+	<head>
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript" src="jquery.base64.js"></script>
+		<script type="text/javascript" src="AJAX.js"></script>
+	</head>
+	<body>
+		<script type="text/javascript">
+			
+			var user2 = {
+				name : "jiejiecool",
+				id: 1
+			}
+			var obj = {
+				id:1
+			}
+
+			var user = {
+				id:1,
+				user:[user2,user2],
+				user2:user2
+
+			}
+
+			Ajax.request({
+				data:user,
+				url:"http://localhost:8080/archetype/user/save",
+				type:"POST",
+				success:function(data){
+					console.log(data);
+				}
+			})
+		</script>
+	</body>
+</html>

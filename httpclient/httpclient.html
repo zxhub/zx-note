@@ -1,0 +1,85 @@
+<!-- add by zhoujie 2017/5/11 15:14 -->
+<html>
+	<head>
+		<title></title>
+		<script type="text/javascript" src="jquery.js"></script>
+	</head>
+	<body>
+		
+		<div id="left" style="float:left; padding-top: 30px;width: 42%">
+			<div id="url">
+				<span>URL:</span>
+				<textarea id="interfaceUrl" style="width: 99%; height: 100px"></textarea>
+				<br>
+				<span>方式:</span>
+				<select id="requestMethod">
+					<option value="GET" selected="true">GET</option>
+					<option value="POST">POST</option>
+				</select>
+			</div>
+			<div id="param" style="padding-top: 20px">
+				<span>参数:</span>
+				<textarea id="reqParam" style="width: 99%;height: 320px"></textarea>
+			</div>
+		</div>
+		<div id="center" style="float: left;width: 6%">
+			<div id="clear" style="float: center;padding-top: 200px">
+				<button id="clearRight" value="清空右侧">
+					清空右侧
+				</button>
+			</div>
+			<div style="float:center;padding-top: 100px">
+				<button id="sub" value="提交">
+					提交
+				</button>
+			</div>
+		</div>
+		<div id="right" style="float:right;width: 50%;padding-top: 30px">
+				<span>返回值:</span>
+				<textarea id="response" style="width: 99%;height: 450px"></textarea>
+				<button id="format">格式化</button>
+				<button id="removeFormat">反格式化</button>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+			//清空右侧
+			$("#clearRight").on("click",function(){
+				$("#response").val("");
+			});
+			//格式化代码
+			$("#format").on("click",function(){
+				formatter($("#response").val());
+			});
+
+			//反格式化代码
+			$("#removeFormat").on("click",function(){
+				unFormatter($("#response").val());
+			});
+			//提交
+			$("#sub").on("click",function(){
+				$.ajax({
+					url:$("#interfaceUrl").val(),
+					data:$("#reqParam").val(),
+					type:$("#requestMethod").val(),
+                	dataType:'json',
+                	contentType:"application/x-www-form-urlencoded;charset=UTF-8",
+	                complete:function(data){
+	                    formatter(data.responseText)
+	                }
+				});
+			});
+			//格式化
+			function formatter (info) {
+				var resp = JSON.parse(info);
+				$("#response").val(JSON.stringify(resp,null,2));
+			};
+			//反格式化
+			function unFormatter(info) {
+				var resp = JSON.parse(info);
+				$("#response").val(JSON.stringify(resp,null,""));
+			};
+			
+		</script>
+
+</html>
